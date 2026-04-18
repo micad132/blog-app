@@ -1,12 +1,13 @@
-import {useState} from 'react'
 import './App.css'
+import LoginContainer from "./auth/login.container.tsx";
+import RegisterContainer from "./auth/register.container.tsx";
 
-function App() {
-    const [count, setCount] = useState(0)
-
+const  App = () => {
     return (
         <>
-            <h1>Get started</h1>
+            <h1>Simple blog app - Nest.js with GraphQL</h1>
+            <LoginContainer />
+            <RegisterContainer />
         </>
     )
 }

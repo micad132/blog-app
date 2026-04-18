@@ -22,5 +22,11 @@ export default defineConfig([
     linterOptions: {
       reportUnusedDisableDirectives: true,
     },
+
+    rules: {
+      "object-curly-spacing": ["error", "always"],
+      "func-style": ["error", "expression"],
+      "react/jsx-max-props-per-line": ["error", { maximum: 1 }],
+    }
   },
 ])
