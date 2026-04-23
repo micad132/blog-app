@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { CommentEntity } from '../comment/comment.entity';
 
 @ObjectType()
 @Entity()
@@ -15,4 +16,8 @@ export class UserEntity {
   @Field()
   @Column()
   password!: string;
+
+  @Field(() => [CommentEntity], { nullable: true })
+  @OneToMany(() => CommentEntity, (comment) => comment.user)
+  comments?: CommentEntity[];
 }
