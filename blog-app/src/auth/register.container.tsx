@@ -4,6 +4,7 @@ import { useState } from "react";
 import AuthInput from "./components/authInput.component.tsx";
 import {FaLock, FaRegUser, FaCity} from "react-icons/fa";
 import {Button} from "@chakra-ui/react";
+import axios from "axios";
 
 const RegisterContainer = () => {
 
@@ -21,8 +22,10 @@ const RegisterContainer = () => {
         }))
     }
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         // api register call
+        await axios.post(`http://localhost:3000/auth//register`, { username: registerValues.username,
+            password: registerValues.password, city: registerValues.city})
         console.log('register values', registerValues);
     }
     return (

@@ -15,6 +15,9 @@ export class UserEntity {
 
   @Field()
   @Column()
+  city!: string;
+
+  @Column()
   password!: string;
 
   @Field(() => [CommentEntity], { nullable: true })
