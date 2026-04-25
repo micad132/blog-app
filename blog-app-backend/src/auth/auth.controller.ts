@@ -17,13 +17,13 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('local'))
-  @Post('/login')
+  @Post('login')
   signIn(@Body() signInDto: LoginDto) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('/register')
+  @Post('register')
   signUp(@Body() registerDtoModel: RegisterModel) {
     return this.authService.signUp(registerDtoModel);
   }

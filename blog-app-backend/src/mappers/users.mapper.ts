@@ -8,6 +8,7 @@ export const UsersMapper = {
     return {
       username: dto.username,
       password: passwordHash,
+      city: dto.city,
     };
   },
 };

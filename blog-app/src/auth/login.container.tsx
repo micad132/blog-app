@@ -38,6 +38,7 @@ const LoginContainer = () => {
                 placeholder={'Username'}
                 onChange={handleUsernameChange}
                 label={'Username'}
+                isPassword={false}
             />
             <AuthInput
                 value={loginValues.password}
@@ -45,6 +46,7 @@ const LoginContainer = () => {
                 placeholder={'Password'}
                 onChange={handlePasswordChange}
                 label={'Password'}
+                isPassword={true}
             />
             <Button onClick={handleLogin}>
                 Login

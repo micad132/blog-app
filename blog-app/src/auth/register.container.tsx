@@ -3,8 +3,11 @@ import type { Register } from "../types/authTypes.ts";
 import { useState } from "react";
 import AuthInput from "./components/authInput.component.tsx";
 import {FaLock, FaRegUser, FaCity} from "react-icons/fa";
-import {Button} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
+
 import axios from "axios";
+import {Toaster, toaster} from "../components/ui/toaster.tsx";
+import {registerValidation} from "../utils/validators.tsx";
 
 const RegisterContainer = () => {
 
@@ -23,10 +26,26 @@ const RegisterContainer = () => {
     }
 
     const handleRegister = async () => {
-        // api register call
-        await axios.post(`http://localhost:3000/auth//register`, { username: registerValues.username,
-            password: registerValues.password, city: registerValues.city})
-        console.log('register values', registerValues);
+        const { isInvalid, errorMessage } = registerValidation(registerValues.username, registerValues.password, registerValues.confirmPassword, registerValues.city);
+        try {
+            await axios.post(`http://localhost:3000/auth/register`, { username: registerValues.username,
+                password: registerValues.password, city: registerValues.city});
+            setRegisterValues({ username: '', city: '', password: '', confirmPassword: ''});
+            toaster.create({
+                title: "Success!",
+                description: "User was successfully registered",
+                closable: true,
+                type: 'success',
+            })
+        } catch (e) {
+            toaster.create({
+                title: "Error",
+                description: "Something went wrong!",
+                closable: true,
+                type: 'error',
+            })
+        }
+
     }
     return (
         <AuthWrapper>
@@ -36,6 +55,7 @@ const RegisterContainer = () => {
                 value={registerValues.username}
                 onChange={(value) => handleValueChange(value, 'username')}
                 label={'Username'}
+                isPassword={false}
             />
             <AuthInput
                 icon={<FaLock />}
@@ -43,6 +63,7 @@ const RegisterContainer = () => {
                 value={registerValues.password}
                 onChange={(value) => handleValueChange(value, 'password')}
                 label={'Password'}
+                isPassword={true}
             />
             <AuthInput
                 icon={<FaLock />}
@@ -50,6 +71,7 @@ const RegisterContainer = () => {
                 value={registerValues.confirmPassword}
                 onChange={(value) => handleValueChange(value, 'confirmPassword')}
                 label={'Confirm password'}
+                isPassword={true}
             />
             <AuthInput
                 icon={<FaCity />}
@@ -57,10 +79,12 @@ const RegisterContainer = () => {
                 value={registerValues.city}
                 onChange={(value) => handleValueChange(value, 'city')}
                 label='City'
+                isPassword={false}
             />
             <Button onClick={handleRegister}>
                 Register
             </Button>
+            <Toaster />
         </AuthWrapper>
     )
 }
