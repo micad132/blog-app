@@ -4,7 +4,6 @@ import { useState } from "react";
 import AuthInput from "./components/authInput.component.tsx";
 import {FaLock, FaRegUser, FaCity} from "react-icons/fa";
 import { Button } from "@chakra-ui/react";
-
 import axios from "axios";
 import {Toaster, toaster} from "../components/ui/toaster.tsx";
 import {registerValidation} from "../utils/validators.tsx";
@@ -27,6 +26,9 @@ const RegisterContainer = () => {
 
     const handleRegister = async () => {
         const { isInvalid, errorMessage } = registerValidation(registerValues.username, registerValues.password, registerValues.confirmPassword, registerValues.city);
+        if(isInvalid) {
+            return;
+        }
         try {
             await axios.post(`http://localhost:3000/auth/register`, { username: registerValues.username,
                 password: registerValues.password, city: registerValues.city});
