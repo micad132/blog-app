@@ -1,6 +1,12 @@
 import { Resolver, Query } from '@nestjs/graphql';
 import { CommentEntity } from './comment.entity';
 import { CommentService } from './comment.service';
+import { Public } from '../decorators/publicEndpoint.decorator';
+import { Get, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../auth/guards/auth-guard';
+import { RolesGuard } from '../auth/guards/role-guard';
+import { Roles } from '../decorators/roles.decorator';
+import { UserRole } from '../users/user.role.enum';
 
 @Resolver(() => CommentEntity)
 export class CommentResolver {
@@ -10,9 +16,24 @@ export class CommentResolver {
   posts(): Promise<CommentEntity[]> {
     return this.commentsService.findAll();
   }
+
+  @Public()
   @Query(() => String)
   hello(): string {
     return 'cosik';
+  }
+
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Get('admin')
+  onlyAdmin(): string {
+    return 'only admin';
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('public-user')
+  publicUser(): string {
+    return 'public user';
   }
 
   // @Query(() => Comment)
