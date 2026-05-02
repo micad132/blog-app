@@ -7,6 +7,8 @@ import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import {Toaster, toaster} from "../components/ui/toaster.tsx";
 import {registerValidation} from "../utils/validators.tsx";
+import {registerRequest} from "./api/authRequests.ts";
+import {ErrorObj} from "../utils/errorObj.ts";
 
 const RegisterContainer = () => {
 
@@ -27,9 +29,16 @@ const RegisterContainer = () => {
     const handleRegister = async () => {
         const { isInvalid, errorMessage } = registerValidation(registerValues.username, registerValues.password, registerValues.confirmPassword, registerValues.city);
         if(isInvalid) {
+            toaster.create({
+                title: 'Register validation error!',
+                description: errorMessage,
+                type: 'error',
+                closable: true,
+            })
             return;
         }
         try {
+            await registerRequest({username: registerValues.username, password: registerValues.password, city: registerValues.city});
             await axios.post(`http://localhost:3000/auth/register`, { username: registerValues.username,
                 password: registerValues.password, city: registerValues.city});
             setRegisterValues({ username: '', city: '', password: '', confirmPassword: ''});
@@ -39,13 +48,15 @@ const RegisterContainer = () => {
                 closable: true,
                 type: 'success',
             })
-        } catch (e) {
-            toaster.create({
-                title: "Error",
-                description: "Something went wrong!",
-                closable: true,
-                type: 'error',
-            })
+        } catch (e: any) {
+            if(e instanceof ErrorObj) {
+                toaster.create({
+                    title: "Error",
+                    description: e.message,
+                    closable: true,
+                    type: 'error',
+                })
+            }
         }
 
     }

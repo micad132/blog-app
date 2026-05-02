@@ -17,6 +17,7 @@ export class UsersService {
   }
 
   async signUp(registerDto: RegisterModel): Promise<UserEntity> {
+    console.log('sign up w srodku');
     const existingUser = await this.userRepository.findOne({
       where: { username: registerDto.username },
     });

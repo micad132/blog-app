@@ -2,7 +2,7 @@
 export const isPasswordTheSame =
     (password: string, confirmPassword: string) => password === confirmPassword;
 
-export const isUsernameValid = (username: string) => username.length > 5 && username.length < 20;
+export const isUsernameValid = (username: string) => username.length > 4 && username.length < 20;
 
 export const isCityValid = (city: string) => city.length > 5 && city.length < 15;
 

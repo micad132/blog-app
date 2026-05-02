@@ -10,3 +10,9 @@ export type Register = {
     confirmPassword: string,
     city: string,
 }
+
+export type RegisterRequest = {
+    username: string,
+    password: string,
+    city: string,
+}

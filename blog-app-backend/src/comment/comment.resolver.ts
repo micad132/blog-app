@@ -3,7 +3,6 @@ import { CommentEntity } from './comment.entity';
 import { CommentService } from './comment.service';
 import { Public } from '../decorators/publicEndpoint.decorator';
 import { Get, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '../auth/guards/auth-guard';
 import { RolesGuard } from '../auth/guards/role-guard';
 import { Roles } from '../decorators/roles.decorator';
 import { UserRole } from '../users/user.role.enum';
@@ -23,14 +22,13 @@ export class CommentResolver {
     return 'cosik';
   }
 
-  @UseGuards(AuthGuard, RolesGuard)
+  @UseGuards(RolesGuard)
   @Roles(UserRole.ADMIN)
   @Get('admin')
   onlyAdmin(): string {
     return 'only admin';
   }
 
-  @UseGuards(AuthGuard)
   @Get('public-user')
   publicUser(): string {
     return 'public user';
