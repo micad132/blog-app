@@ -2,13 +2,13 @@ import AuthWrapper from "./components/authWrapper.component.tsx";
 import type { Register } from "../types/authTypes.ts";
 import { useState } from "react";
 import AuthInput from "./components/authInput.component.tsx";
-import {FaLock, FaRegUser, FaCity} from "react-icons/fa";
+import { FaLock, FaRegUser, FaCity } from "react-icons/fa";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
-import {Toaster, toaster} from "../components/ui/toaster.tsx";
-import {registerValidation} from "../utils/validators.tsx";
-import {registerRequest} from "./api/authRequests.ts";
-import {ErrorObj} from "../utils/errorObj.ts";
+import { Toaster, toaster } from "../components/ui/toaster.tsx";
+import { registerValidation } from "../utils/validators.tsx";
+import { registerRequest } from "./api/authRequests.ts";
+import { ErrorObj } from "../utils/errorObj.ts";
 
 const RegisterContainer = () => {
 
@@ -38,17 +38,17 @@ const RegisterContainer = () => {
             return;
         }
         try {
-            await registerRequest({username: registerValues.username, password: registerValues.password, city: registerValues.city});
+            await registerRequest({ username: registerValues.username, password: registerValues.password, city: registerValues.city });
             await axios.post(`http://localhost:3000/auth/register`, { username: registerValues.username,
-                password: registerValues.password, city: registerValues.city});
-            setRegisterValues({ username: '', city: '', password: '', confirmPassword: ''});
+                password: registerValues.password, city: registerValues.city });
+            setRegisterValues({ username: '', city: '', password: '', confirmPassword: '' });
             toaster.create({
                 title: "Success!",
                 description: "User was successfully registered",
                 closable: true,
                 type: 'success',
             })
-        } catch (e: any) {
+        } catch (e) {
             if(e instanceof ErrorObj) {
                 toaster.create({
                     title: "Error",

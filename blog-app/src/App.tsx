@@ -1,14 +1,14 @@
 import './App.css'
 import NavContainer from "./header/nav.container.tsx";
-import {Outlet} from "react-router";
+import { Outlet } from "react-router";
 import HeaderContainer from "./header/header.container.tsx";
 
-const  App = () => {
+const App = () => {
     return (
         <>
-            <HeaderContainer />
-            <NavContainer />
-            <Outlet />
+            <HeaderContainer/>
+            <NavContainer/>
+            <Outlet/>
         </>
     )
 }

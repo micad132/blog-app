@@ -1,6 +1,6 @@
-import {Button} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import styled from "styled-components";
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 
 const ButtonsWrapper = styled.div`
     display: flex;
@@ -13,10 +13,14 @@ const AuthButtonsContainer = () => {
 
     return (
         <ButtonsWrapper>
-            <Button colorPalette="teal" variant="solid" onClick={() =>  navigate("/login")}>
+            <Button colorPalette="teal"
+variant="solid"
+onClick={() =>  navigate("/login")}>
                 Login
             </Button>
-            <Button colorPalette="teal" variant="solid" onClick={() =>  navigate("/register")}>
+            <Button colorPalette="teal"
+variant="solid"
+onClick={() =>  navigate("/register")}>
                 Register
             </Button>
         </ButtonsWrapper>

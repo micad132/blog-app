@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router";
+import { createBrowserRouter } from "react-router";
 import App from "../App.tsx";
 import RegisterContainer from "../auth/register.container.tsx";
 import LoginContainer from "../auth/login.container.tsx";

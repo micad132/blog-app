@@ -124,8 +124,12 @@ export const PasswordStrengthMeter = React.forwardRef<
   const { label, colorPalette } = getColorPalette(percent)
 
   return (
-    <Stack align="flex-end" gap="1" ref={ref} {...rest}>
-      <HStack width="full" {...rest}>
+    <Stack align="flex-end"
+gap="1"
+ref={ref}
+{...rest}>
+      <HStack width="full"
+{...rest}>
         {Array.from({ length: max }).map((_, index) => (
           <Box
             key={index}
@@ -147,7 +151,7 @@ export const PasswordStrengthMeter = React.forwardRef<
   )
 })
 
-function getColorPalette(percent: number) {
+const getColorPalette = (percent: number) => {
   switch (true) {
     case percent < 33:
       return { label: "Low", colorPalette: "red" }

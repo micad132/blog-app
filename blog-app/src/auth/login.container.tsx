@@ -5,7 +5,7 @@ import { FaLock } from "react-icons/fa";
 import { useState } from "react";
 import type { Login } from "../types/authTypes.ts";
 import { Button } from "@chakra-ui/react";
-import {loginRequest} from "./api/authRequests.ts";
+import { loginRequest } from "./api/authRequests.ts";
 
 
 const LoginContainer = () => {
@@ -28,7 +28,7 @@ const LoginContainer = () => {
 
     const handleLogin = async () => {
         console.log('login values', loginValues);
-        const data = await loginRequest({ username: loginValues.username, password: loginValues.password});
+        const data = await loginRequest({ username: loginValues.username, password: loginValues.password });
         console.log('data', data);
     }
 

@@ -1,6 +1,6 @@
 import axios from "axios";
-import type {Login, RegisterRequest} from "../../types/authTypes.ts";
-import {ErrorObj} from "../../utils/errorObj.ts";
+import type { Login, RegisterRequest } from "../../types/authTypes.ts";
+import { ErrorObj } from "../../utils/errorObj.ts";
 
 export const loginRequest = async (loginDto: Login): Promise<string> =>
     await axios.post(`http://localhost:3000/auth/login`, loginDto)

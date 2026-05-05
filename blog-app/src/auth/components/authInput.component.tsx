@@ -34,7 +34,8 @@ const AuthInput = ({ icon, placeholder, value, onChange, label, isPassword }: Pr
 
 
     return (
-    <HStack gap="10" width="full">
+    <HStack gap="10"
+width="full">
         <Field.Root required>
             <Field.Label>
                 {label} <Field.RequiredIndicator />
