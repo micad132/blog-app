@@ -3,6 +3,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import type { RegisterModel } from './registerDto.model';
 import * as bcrypt from 'bcrypt';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,8 @@ export class AuthService {
   async signIn(
     username: string,
     pass: string,
-  ): Promise<{ access_token: string }> {
+    res: Response,
+  ): Promise<{ accessToken: string }> {
     const user = await this.usersService.findOne(username);
 
     if (!user) {
@@ -27,12 +29,17 @@ export class AuthService {
       throw new UnauthorizedException('Password is incorrect!');
     }
 
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
-    }
+    // if (user?.password !== pass) {
+    //   throw new UnauthorizedException();
+    // }
     const payload = { sub: user.id, username: user.username, role: user.role };
+    const accessToken = await this.jwtService.signAsync(payload);
+    res.cookie('access_token', accessToken, {
+      httpOnly: true,
+      secure: true,
+    });
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      accessToken,
     };
   }
 

@@ -6,12 +6,14 @@ import {
   HttpStatus,
   Post,
   Request,
+  Response,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './loginDto.model';
 import type { RegisterModel } from './registerDto.model';
 import type { RequestWithUser } from './auth.types';
 import { Public } from '../decorators/publicEndpoint.decorator';
+import type { Response as ExpressResponse } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -20,8 +22,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Public()
   @Post('login')
-  signIn(@Body() signInDto: LoginDto) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  signIn(
+    @Body() signInDto: LoginDto,
+    @Response({ passthrough: true }) res: ExpressResponse,
+  ) {
+    return this.authService.signIn(signInDto.username, signInDto.password, res);
   }
 
   @HttpCode(HttpStatus.OK)
