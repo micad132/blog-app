@@ -24,22 +24,18 @@ export class AuthGuard implements CanActivate {
     ]);
     console.log('AuthGuard hit:', context.getHandler().name);
     if (isPublic) {
-      // 💡 See this condition
       return true;
     }
 
     console.log('AuthGuard hit:', context.getHandler().name);
     const request = context.switchToHttp().getRequest<RequestWithUser>();
-    const token = this.extractTokenFromHeader(request);
+    const token = this.extractTokenFromCookies(request);
+    console.log('token', token);
     if (!token) {
       throw new UnauthorizedException();
     }
     try {
-      // 💡 Here the JWT secret key that's used for verifying the payload
-      // is the key that was passed in the JwtModule
       const payload = await this.jwtService.verifyAsync<JwtPayload>(token);
-      // 💡 We're assigning the payload to the request object here
-      // so that we can access it in our route handlers
       request.user = payload;
     } catch {
       throw new UnauthorizedException();
@@ -47,8 +43,8 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+  private extractTokenFromCookies(request: Request): string | undefined {
+    const cookies = request.cookies as { accessToken: string };
+    return cookies?.accessToken;
   }
 }

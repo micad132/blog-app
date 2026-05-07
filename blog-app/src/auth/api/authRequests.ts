@@ -3,7 +3,7 @@ import type { Login, RegisterRequest } from "../../types/authTypes.ts";
 import { ErrorObj } from "../../utils/errorObj.ts";
 
 export const loginRequest = async (loginDto: Login): Promise<string> =>
-    await axios.post(`http://localhost:3000/auth/login`, loginDto)
+    await axios.post(`http://localhost:3000/auth/login`, loginDto, { withCredentials: true })
         .then((res) => res.data)
         .catch((exc) => exc);
 
