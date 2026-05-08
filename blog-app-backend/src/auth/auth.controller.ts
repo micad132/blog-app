@@ -36,8 +36,8 @@ export class AuthController {
     return this.authService.signUp(registerDtoModel);
   }
 
-  @Get('profile')
-  getProfile(@Request() req: RequestWithUser) {
+  @Get('me')
+  getMe(@Request() req: RequestWithUser) {
     return req.user;
   }
 }
