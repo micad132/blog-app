@@ -4,7 +4,6 @@ import { useState } from "react";
 import AuthInput from "./components/authInput.component.tsx";
 import { FaLock, FaRegUser, FaCity } from "react-icons/fa";
 import { Button } from "@chakra-ui/react";
-import axios from "axios";
 import { Toaster, toaster } from "../components/ui/toaster.tsx";
 import { registerValidation } from "../utils/validators.tsx";
 import { registerRequest } from "./api/authRequests.ts";
@@ -39,12 +38,10 @@ const RegisterContainer = () => {
         }
         try {
             await registerRequest({ username: registerValues.username, password: registerValues.password, city: registerValues.city });
-            await axios.post(`http://localhost:3000/auth/register`, { username: registerValues.username,
-                password: registerValues.password, city: registerValues.city });
             setRegisterValues({ username: '', city: '', password: '', confirmPassword: '' });
             toaster.create({
                 title: "Success!",
-                description: "User was successfully registered",
+                description: "You were successfully registered! Now you can log in",
                 closable: true,
                 type: 'success',
             })

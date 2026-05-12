@@ -6,6 +6,8 @@ import { useState } from "react";
 import type { Login } from "../types/authTypes.ts";
 import { Button } from "@chakra-ui/react";
 import { loginRequest } from "./api/authRequests.ts";
+import { ErrorObj } from "../utils/errorObj.ts";
+import { toaster } from "../components/ui/toaster.tsx";
 
 
 const LoginContainer = () => {
@@ -28,8 +30,18 @@ const LoginContainer = () => {
 
     const handleLogin = async () => {
         console.log('login values', loginValues);
-        const data = await loginRequest({ username: loginValues.username, password: loginValues.password });
-        console.log('data', data);
+        try {
+            await loginRequest({ username: loginValues.username, password: loginValues.password });
+        } catch (e) {
+            if(e instanceof ErrorObj) {
+                toaster.create({
+                    title: "Error",
+                    description: e.message,
+                    closable: true,
+                    type: 'error',
+                })
+            }
+        }
     }
 
     return (
