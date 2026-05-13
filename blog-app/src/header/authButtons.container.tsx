@@ -14,14 +14,9 @@ const AuthButtonsContainer = () => {
     return (
         <ButtonsWrapper>
             <Button colorPalette="teal"
-variant="solid"
-onClick={() =>  navigate("/login")}>
+                    variant="solid"
+                    onClick={() => navigate("/login")}>
                 Login
-            </Button>
-            <Button colorPalette="teal"
-variant="solid"
-onClick={() =>  navigate("/register")}>
-                Register
             </Button>
         </ButtonsWrapper>
     )
