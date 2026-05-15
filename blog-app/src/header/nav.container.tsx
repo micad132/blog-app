@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import styled from "styled-components";
+import { useAuthStore } from "../store/authStore.ts";
 
 
 const NavWrapper = styled.nav`
@@ -42,6 +43,14 @@ const StyledNavLink = styled(NavLink)`
 `
 
 const NavContainer = () => {
+
+    const { user } = useAuthStore();
+
+    if(user.username === '') {
+        return null;
+    }
+
+
     return (
         <NavWrapper>
             <StyledNavLink
