@@ -5,11 +5,11 @@ import { FaLock } from "react-icons/fa";
 import { useState } from "react";
 import type { Login } from "../types/authTypes.ts";
 import { Button } from "@chakra-ui/react";
-import { loginRequest } from "./api/authRequests.ts";
 import { ErrorObj } from "../utils/errorObj.ts";
-import { toaster } from "../components/ui/toaster.tsx";
+import { Toaster, toaster } from "../components/ui/toaster.tsx";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
+import { useAuthStore } from "../store/authStore.ts";
 
 
 const RegisterLink = styled.p`
@@ -26,6 +26,7 @@ const RegisterLinKWrapper = styled.div`
 
 const LoginContainer = () => {
 
+    const { login } = useAuthStore();
     const [loginValues, setLoginValues] = useState<Login>({ username: '', password: '' });
     const navigate = useNavigate();
 
@@ -46,7 +47,17 @@ const LoginContainer = () => {
     const handleLogin = async () => {
         console.log('login values', loginValues);
         try {
-            await loginRequest({ username: loginValues.username, password: loginValues.password });
+            login({ username: loginValues.username, password: loginValues.password });
+            toaster.create({
+                title: "Success",
+                description: "You were successfully logged in! Now you will be redirected to home page",
+                closable: true,
+                type: 'success',
+            })
+            setLoginValues({ username: '', password: '' })
+            setTimeout(() => {
+                navigate('/');
+            }, 1500);
         } catch (e) {
             if (e instanceof ErrorObj) {
                 toaster.create({
@@ -91,6 +102,7 @@ const LoginContainer = () => {
                     Register
                 </Button>
             </RegisterLinKWrapper>
+            <Toaster />
         </AuthWrapper>
     )
 }

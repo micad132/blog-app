@@ -40,4 +40,10 @@ export class AuthController {
   getMe(@Request() req: RequestWithUser) {
     return req.user;
   }
+
+  @Post('logout')
+  logout(@Response({ passthrough: true }) res: ExpressResponse) {
+    res.clearCookie('accessToken');
+    return { message: 'Successfully logged out!' };
+  }
 }

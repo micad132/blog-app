@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import type { RegisterModel } from './registerDto.model';
 import * as bcrypt from 'bcrypt';
 import { Response } from 'express';
+import { JwtPayload } from './auth.types';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     username: string,
     pass: string,
     res: Response,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<JwtPayload> {
     const user = await this.usersService.findOne(username);
 
     if (!user) {
@@ -39,9 +40,7 @@ export class AuthService {
       secure: true,
       sameSite: 'strict',
     });
-    return {
-      accessToken,
-    };
+    return payload;
   }
 
   async signUp(signUpModel: RegisterModel): Promise<void> {

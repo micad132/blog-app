@@ -1,21 +1,19 @@
-import { Spinner } from "@chakra-ui/react"
 import { useAuthStore } from "../store/authStore.ts";
 import NotLoggedInComponent from "../components/notLoggedIn.component.tsx";
 import { Outlet } from "react-router";
+import LoadingSpinnerComponent from "../components/loadingSpinner.component.tsx";
 
 
 const ProtectedRouteComponent = () => {
-    const { user, isLoading } = useAuthStore();
+    const { isLogged, isLoading } = useAuthStore();
+
     if (isLoading) {
         return (
-            <Spinner
-                color="teal.500"
-                size="lg"
-            />
+            <LoadingSpinnerComponent />
         )
     }
 
-    if(!user || user.username === '') {
+    if(!isLogged) {
         return (
             <NotLoggedInComponent />
         )

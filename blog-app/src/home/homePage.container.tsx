@@ -3,10 +3,8 @@ import NotLoggedInComponent from "../components/notLoggedIn.component.tsx";
 
 const HomePageContainer = () => {
 
-    const { user } = useAuthStore();
-
-
-    if(user.username === '') {
+    const { isLogged } = useAuthStore();
+    if(!isLogged) {
         return <NotLoggedInComponent />
     }
     return (

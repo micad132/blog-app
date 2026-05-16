@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Login, RegisterRequest } from "../../types/authTypes.ts";
+import type { RegisterRequest } from "../../types/authTypes.ts";
 import { ErrorObj } from "../../utils/errorObj.ts";
 
 // export const loginRequest = async (loginDto: Login): Promise<string> =>
@@ -7,19 +7,6 @@ import { ErrorObj } from "../../utils/errorObj.ts";
 //         .then((res) => res.data)
 //         .catch((exc) => exc);
 
-export const loginRequest = async (loginDto: Login): Promise<void> =>  {
-    try {
-        await axios.post(`http://localhost:3000/auth/login`, loginDto, { withCredentials: true })
-    } catch (e) {
-        if(axios.isAxiosError(e)) {
-            throw new ErrorObj(
-                e.response?.status ?? 500,
-                e.response?.data?.message ?? 'Unknown error!',
-            )
-        }
-        throw e;
-    }
-}
 
 export const registerRequest = async (registerDto: RegisterRequest): Promise<void> => {
     try {
