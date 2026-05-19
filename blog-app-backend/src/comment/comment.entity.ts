@@ -1,4 +1,10 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  ManyToOne,
+  CreateDateColumn,
+} from 'typeorm';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { UserEntity } from '../users/user.entity';
 
@@ -18,8 +24,8 @@ export class CommentEntity {
   content!: string;
 
   @Field()
-  @Column()
-  date!: number;
+  @CreateDateColumn()
+  date!: Date;
 
   @Field(() => UserEntity)
   @ManyToOne(() => UserEntity, (user) => user.comments, {
