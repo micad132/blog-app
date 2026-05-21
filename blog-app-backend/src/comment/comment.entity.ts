@@ -25,7 +25,7 @@ export class CommentEntity {
 
   @Field()
   @CreateDateColumn()
-  date!: Date;
+  createdAt!: Date;
 
   @Field(() => UserEntity)
   @ManyToOne(() => UserEntity, (user) => user.comments, {

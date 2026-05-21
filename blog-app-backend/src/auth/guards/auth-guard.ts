@@ -9,6 +9,12 @@ import { Request } from 'express';
 import { JwtPayload, RequestWithUser } from '../auth.types';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '../../decorators/publicEndpoint.decorator';
+import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
+
+interface GqlContext {
+  req: RequestWithUser;
+  res: Response;
+}
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -26,7 +32,16 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest<RequestWithUser>();
+    let request: RequestWithUser;
+    if (context.getType<GqlContextType>() === 'graphql') {
+      const ctx = GqlExecutionContext.create(context);
+      const { req } = ctx.getContext<GqlContext>();
+      request = req;
+    } else {
+      request = context.switchToHttp().getRequest<RequestWithUser>();
+    }
+
+    // const request = context.switchToHttp().getRequest<RequestWithUser>();
     const token = this.extractTokenFromCookies(request);
     if (!token) {
       throw new UnauthorizedException();

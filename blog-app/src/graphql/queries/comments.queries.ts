@@ -1,9 +1,9 @@
 
-import { gql, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 
-const CREATE_COMMENT = gql`
-  mutation CreateComment($title: String!, $content: String!, $date: String!) {
-    createComment(commentRequestDTO: { title: $title, content: $content, date: $date }) {
+export const CREATE_COMMENT = gql`
+  mutation CreateComment($title: String!, $content: String!) {
+    createComment(commentRequestDTO: { title: $title, content: $content}) {
       id
       title
       content
@@ -11,7 +11,7 @@ const CREATE_COMMENT = gql`
   }
 `;
 
-const GET_COMMENTS = gql`
+export const GET_COMMENTS = gql`
   query GetComments {
     comments {
       id
@@ -22,7 +22,7 @@ const GET_COMMENTS = gql`
   }
 `;
 
-const GET_COMMENT = gql`
+export const GET_COMMENT = gql`
   query GetComment($id: Int!) {
     comment(id: $id) {
       id
@@ -33,7 +33,7 @@ const GET_COMMENT = gql`
   }
 `;
 
-const REMOVE_COMMENT = gql`
+export const REMOVE_COMMENT = gql`
   mutation RemoveComment($id: Int!) {
     removeComment(id: $id)
   }

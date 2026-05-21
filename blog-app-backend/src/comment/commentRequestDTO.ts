@@ -7,7 +7,4 @@ export class CommentRequestDTO {
 
   @Field()
   content!: string;
-
-  @Field()
-  date!: number;
 }
