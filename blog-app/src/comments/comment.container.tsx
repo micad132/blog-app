@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client/react";
 import { GET_COMMENTS } from "../graphql/queries/comments.queries.ts";
 import LoadingSpinnerComponent from "../components/loadingSpinner.component.tsx";
+import AddingCommentContainer from "./containers/addingComment.container.tsx";
 
 const CommentContainer = () => {
 
@@ -16,6 +17,7 @@ const CommentContainer = () => {
     return (
         <div>
             KOMENTARZE
+            <AddingCommentContainer />
         </div>
     )
 }

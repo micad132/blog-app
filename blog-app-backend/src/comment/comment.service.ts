@@ -24,8 +24,8 @@ export class CommentService {
     return true;
   }
 
-  async create(input: CommentRequestDTO): Promise<CommentEntity> {
-    const comment = this.commentRepository.create(input);
+  async create(text: string): Promise<CommentEntity> {
+    const comment = this.commentRepository.create(text);
     return this.commentRepository.save(comment);
   }
 }

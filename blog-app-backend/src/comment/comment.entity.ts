@@ -17,11 +17,7 @@ export class CommentEntity {
 
   @Field()
   @Column()
-  title!: string;
-
-  @Field()
-  @Column()
-  content!: string;
+  text!: string;
 
   @Field()
   @CreateDateColumn()

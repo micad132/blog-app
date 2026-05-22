@@ -2,11 +2,10 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_COMMENT = gql`
-  mutation CreateComment($title: String!, $content: String!) {
-    createComment(commentRequestDTO: { title: $title, content: $content}) {
+  mutation CreateComment($text: String!) {
+    createComment(commentRequestDTO: { text: $text}) {
       id
-      title
-      content
+        text
     }
   }
 `;
