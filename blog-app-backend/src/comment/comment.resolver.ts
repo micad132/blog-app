@@ -5,7 +5,10 @@ import { Get, UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../auth/guards/role-guard';
 import { Roles } from '../decorators/roles.decorator';
 import { UserRole } from '../users/user.role.enum';
-import { CommentRequestDTO } from './commentRequestDTO';
+import { AuthGuard } from '../auth/guards/auth-guard';
+import type { JwtPayload } from '../auth/auth.types';
+import { CurrentUser } from '../decorators/currentUser.decorator';
+import { CommentResponseDTO } from './commentResponseDTO';
 
 @Resolver(() => CommentEntity)
 export class CommentResolver {
@@ -25,18 +28,21 @@ export class CommentResolver {
 
   @Mutation(() => CommentEntity)
   createComment(
-    @Args('commentRequestDTO') input: CommentRequestDTO,
+    @Args('text') text: string,
+    @CurrentUser() jwtPayload: JwtPayload,
   ): Promise<CommentEntity> {
-    return this.commentsService.create(input);
+    return this.commentsService.create(text, jwtPayload);
   }
 
-  @Query(() => [CommentEntity], { name: 'comments' })
-  findAll(): Promise<CommentEntity[]> {
+  @Query(() => [CommentResponseDTO], { name: 'comments' })
+  findAll(): Promise<CommentResponseDTO[]> {
     return this.commentsService.findAll();
   }
 
-  @Query(() => CommentEntity, { name: 'comment' })
-  findOne(@Args('id', { type: () => Int }) id: number): Promise<CommentEntity> {
+  @Query(() => CommentResponseDTO, { name: 'comment' })
+  findOne(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<CommentResponseDTO> {
     return this.commentsService.findOneById(id);
   }
 

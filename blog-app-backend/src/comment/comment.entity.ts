@@ -27,6 +27,7 @@ export class CommentEntity {
   @ManyToOne(() => UserEntity, (user) => user.comments, {
     onDelete: 'CASCADE',
     nullable: false,
+    eager: true,
   })
   user!: UserEntity;
 }
