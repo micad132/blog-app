@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import type { ReactNode } from "react";
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
     background: white;
     width: 70%;
     margin: 20px auto;
@@ -13,11 +13,15 @@ const Wrapper = styled.div`
 
 interface Props {
     children: ReactNode,
+    onSubmit: (e: any) => void,
 }
 
-const AuthWrapper = ({ children }: Props) => {
+const AuthWrapper = ({ children, onSubmit }: Props) => {
     return (
-        <Wrapper>
+        <Wrapper
+            onSubmit={(e) => onSubmit(e)}
+            noValidate={true}
+        >
             {children}
         </Wrapper>
     )

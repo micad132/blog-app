@@ -25,7 +25,8 @@ const RegisterContainer = () => {
         }))
     }
 
-    const handleRegister = async () => {
+    const handleRegister = async (e: SubmitEvent) => {
+        e.preventDefault();
         const { isInvalid, errorMessage } = registerValidation(registerValues.username, registerValues.password, registerValues.confirmPassword, registerValues.city);
         if(isInvalid) {
             toaster.create({
@@ -58,7 +59,7 @@ const RegisterContainer = () => {
 
     }
     return (
-        <AuthWrapper>
+        <AuthWrapper onSubmit={handleRegister}>
             <AuthInput
                 icon={<FaRegUser />}
                 placeholder={'Username'}
@@ -91,7 +92,7 @@ const RegisterContainer = () => {
                 label='City'
                 isPassword={false}
             />
-            <Button onClick={handleRegister}>
+            <Button type={'submit'}>
                 Register
             </Button>
             <Toaster />

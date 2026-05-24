@@ -44,7 +44,8 @@ const LoginContainer = () => {
         }))
     }
 
-    const handleLogin = async () => {
+    const handleLogin = async (e: SubmitEvent) => {
+        e.preventDefault();
         console.log('login values', loginValues);
         try {
             login({ username: loginValues.username, password: loginValues.password });
@@ -71,7 +72,7 @@ const LoginContainer = () => {
     }
 
     return (
-        <AuthWrapper>
+        <AuthWrapper onSubmit={handleLogin}>
             <AuthInput
                 value={loginValues.username}
                 icon={<FaRegUser/>}
@@ -88,7 +89,9 @@ const LoginContainer = () => {
                 label={'Password'}
                 isPassword={true}
             />
-            <Button onClick={handleLogin}>
+            <Button
+                type='submit'
+            >
                 Login
             </Button>
             <RegisterLinKWrapper>
