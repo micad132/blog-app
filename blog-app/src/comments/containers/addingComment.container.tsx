@@ -18,7 +18,9 @@ const Wrapper = styled.form`
 const AddingCommentContainer = () => {
 
     const [commentText, setCommentText] = useState<string>('');
-    const [createComment, { loading, error }] = useMutation(CREATE_COMMENT);
+    const [createComment, { loading, error }] = useMutation(CREATE_COMMENT, {
+        refetchQueries: ['GetComments']
+    });
 
     if(loading) {
         return <LoadingSpinnerComponent />

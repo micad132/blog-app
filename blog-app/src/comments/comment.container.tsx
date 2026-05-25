@@ -4,6 +4,7 @@ import LoadingSpinnerComponent from "../components/loadingSpinner.component.tsx"
 import AddingCommentContainer from "./containers/addingComment.container.tsx";
 import type { CommentFetchResponse } from "../types/commentsTypes.ts";
 import SingleCommentComponent from "./components/singleComment.component.tsx";
+import { Toaster } from "../components/ui/toaster.tsx";
 
 const CommentContainer = () => {
 
@@ -24,6 +25,7 @@ const CommentContainer = () => {
                 {data?.comments.map((com) =>
                     (
                     <SingleCommentComponent
+                        id={com.id}
                         key={com.id}
                         text={com.text}
                         username={com.user.username}
@@ -32,6 +34,7 @@ const CommentContainer = () => {
                     ))}
             </div>
             <AddingCommentContainer />
+            <Toaster />
         </div>
     )
 }
