@@ -6,7 +6,7 @@ import { useState } from "react";
 import type { Login } from "../types/authTypes.ts";
 import { Button } from "@chakra-ui/react";
 import { ErrorObj } from "../utils/errorObj.ts";
-import { Toaster, toaster } from "../components/ui/toaster.tsx";
+import { toaster } from "../components/ui/toaster.tsx";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../store/authStore.ts";
@@ -26,7 +26,7 @@ const RegisterLinKWrapper = styled.div`
 
 const LoginContainer = () => {
 
-    const { login } = useAuthStore();
+    const login = useAuthStore((state) => state.login);
     const [loginValues, setLoginValues] = useState<Login>({ username: '', password: '' });
     const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ const LoginContainer = () => {
         e.preventDefault();
         console.log('login values', loginValues);
         try {
-            login({ username: loginValues.username, password: loginValues.password });
+            await login({ username: loginValues.username, password: loginValues.password });
             toaster.create({
                 title: "Success",
                 description: "You were successfully logged in! Now you will be redirected to home page",
@@ -105,7 +105,6 @@ const LoginContainer = () => {
                     Register
                 </Button>
             </RegisterLinKWrapper>
-            <Toaster />
         </AuthWrapper>
     )
 }

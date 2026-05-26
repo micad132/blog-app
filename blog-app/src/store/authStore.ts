@@ -11,7 +11,7 @@ export type AuthStore = {
     isLoading: boolean,
     error: string,
     checkAuth: () => void,
-    login: (loginDto: Login) => void,
+    login: (loginDto: Login) => Promise<void>,
     logout: () => void,
 }
 
@@ -36,6 +36,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
             const res = await axios.post(`http://localhost:3000/auth/login`, loginDto, { withCredentials: true })
             set({ user: res.data, error: '', isLogged: true })
         } catch (e) {
+            console.log('catch', e);
             if(axios.isAxiosError(e)) {
                 throw new ErrorObj(
                     e.response?.status ?? 500,

@@ -5,6 +5,7 @@ import HeaderContainer from "./header/header.container.tsx";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/authStore.ts";
 import LoadingSpinnerComponent from "./components/loadingSpinner.component.tsx";
+import { Toaster } from "./components/ui/toaster.tsx";
 
 const App = () => {
 
@@ -23,6 +24,7 @@ const App = () => {
             <HeaderContainer/>
             <NavContainer/>
             <Outlet/>
+            <Toaster />
         </>
     )
 }

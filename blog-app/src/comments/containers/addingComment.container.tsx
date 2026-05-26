@@ -15,6 +15,11 @@ const Wrapper = styled.form`
     }
 `
 
+const StyledTextarea = styled(Textarea)`
+    color: #000;
+    background: #e5e4e7;
+`
+
 const AddingCommentContainer = () => {
 
     const [commentText, setCommentText] = useState<string>('');
@@ -36,11 +41,12 @@ const AddingCommentContainer = () => {
     return (
         <Wrapper onSubmit={handleSubmit}>
             <Field.Root>
-            <Textarea
+            <StyledTextarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder={'Add comment here...'}
                 resize={'none'}
+                colorPalette={'teal'}
             />
             <Field.HelperText>Max 100 characters.</Field.HelperText>
             <Button
