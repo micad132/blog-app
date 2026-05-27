@@ -5,7 +5,6 @@ import { Get, UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../auth/guards/role-guard';
 import { Roles } from '../decorators/roles.decorator';
 import { UserRole } from '../users/user.role.enum';
-import { AuthGuard } from '../auth/guards/auth-guard';
 import type { JwtPayload } from '../auth/auth.types';
 import { CurrentUser } from '../decorators/currentUser.decorator';
 import { CommentResponseDTO } from './commentResponseDTO';
@@ -46,6 +45,7 @@ export class CommentResolver {
     return this.commentsService.findOneById(id);
   }
 
+  @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
   removeComment(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
     return this.commentsService.removeCommentById(id);
