@@ -5,6 +5,7 @@ import { Icon } from "@chakra-ui/react";
 import { useMutation } from "@apollo/client/react";
 import { REMOVE_COMMENT } from "../../graphql/queries/comments.queries.ts";
 import { toaster } from "../../components/ui/toaster.tsx";
+import { CombinedGraphQLErrors } from "@apollo/client";
 
 
 const Wrapper = styled.div`
@@ -45,11 +46,13 @@ interface Props {
     username: string,
     createdAt: string,
     id: number,
+    isAdmin: boolean,
 }
 
-const SingleComment = ({ text, createdAt, username, id }: Props) => {
+const SingleComment = ({ text, createdAt, username, id, isAdmin }: Props) => {
 
     const [deleteComment ] = useMutation(REMOVE_COMMENT, { refetchQueries: ['GetComments'] });
+
 
     const handleDelete = async () => {
         try {
@@ -63,12 +66,14 @@ const SingleComment = ({ text, createdAt, username, id }: Props) => {
                 type: 'success',
             })
         } catch (e) {
-            toaster.create({
-                title: "Error",
-                description: `${e}`,
-                closable: true,
-                type: 'error',
-            })
+            if (CombinedGraphQLErrors.is(e)) {
+                toaster.create({
+                    title: 'Error',
+                    description: e.errors[0].message,
+                    type: 'error',
+                });
+            }
+
         }
     };
 
@@ -79,14 +84,14 @@ const SingleComment = ({ text, createdAt, username, id }: Props) => {
                     <Username>{username}</Username>
                     <span>{formatDate(createdAt)}</span>
                 </CommentDetailsWrapper>
-                <IconWrapper>
+                {isAdmin && <IconWrapper>
                     <Icon
                         size="md"
                         onClick={handleDelete}
                     >
                         <FaTrash />
                     </Icon>
-                </IconWrapper>
+                </IconWrapper>}
             </DetailsWithIcon>
             {text}
         </Wrapper>
