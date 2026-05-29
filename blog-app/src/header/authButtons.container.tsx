@@ -1,11 +1,17 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Icon } from "@chakra-ui/react";
 import styled from "styled-components";
+import { FaUser } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../store/authStore.ts";
 
 const ButtonsWrapper = styled.div`
     display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: 20px;
+`
+
+const StyledIcon = styled(Icon)`
+    cursor: pointer;
 `
 
 const AuthButtonsContainer = () => {
@@ -16,13 +22,23 @@ const AuthButtonsContainer = () => {
     const getProperButton = () => {
         if(isLogged) {
             return (
-                <Button
-                    colorPalette="teal"
-                    variant="solid"
-                    onClick={() => logout()}
-                >
-                    Log out
-                </Button>
+                <ButtonsWrapper>
+                        <StyledIcon
+                            onClick={() => navigate('/me')}
+                            size="lg"
+                            color="white"
+                        >
+                            <FaUser />
+                        </StyledIcon>
+                    <Button
+                        colorPalette="teal"
+                        variant="solid"
+                        onClick={() => logout()}
+                    >
+                        Log out
+                    </Button>
+                </ButtonsWrapper>
+
             )
         }
         return (
@@ -35,9 +51,9 @@ const AuthButtonsContainer = () => {
     }
 
     return (
-        <ButtonsWrapper>
+        <div>
             {getProperButton()}
-        </ButtonsWrapper>
+        </div>
     )
 }
 
