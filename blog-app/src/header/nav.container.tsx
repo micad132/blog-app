@@ -10,6 +10,7 @@ const NavWrapper = styled.nav`
     padding: 10px 0;
     align-items: center;
     justify-content: center;
+    color: #fff;
 
     a.active {
         color: white;
