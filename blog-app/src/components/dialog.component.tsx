@@ -1,4 +1,5 @@
-import { Button, Dialog, Portal, CloseButton  } from "@chakra-ui/react";
+import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
+import type { ReactNode } from "react";
 import styled from "styled-components";
 
 const DialogTitle = styled(Dialog.Title)`
@@ -8,9 +9,15 @@ const DialogTitle = styled(Dialog.Title)`
 interface Props {
     open: boolean,
     setOpen: (open: boolean) => void,
+    dialogOpenButtonText: string,
+    actionButtonAction: () => void,
+    dialogTitle: string,
+    dialogBody: ReactNode,
+    actionButtonText: string,
 }
 
-const EditProfileDialogComponent = ({ open, setOpen }: Props) => {
+const DialogComponent = ({ open, setOpen,
+                             actionButtonAction, dialogOpenButtonText, dialogTitle, dialogBody, actionButtonText }: Props) => {
 
     return (
         <Dialog.Root
@@ -22,9 +29,8 @@ const EditProfileDialogComponent = ({ open, setOpen }: Props) => {
                 <Button
                     colorPalette="white"
                     variant="solid"
-
                 >
-                    Edit profile
+                    {dialogOpenButtonText}
                 </Button>
             </Dialog.Trigger>
             <Portal>
@@ -32,19 +38,24 @@ const EditProfileDialogComponent = ({ open, setOpen }: Props) => {
                 <Dialog.Positioner>
                     <Dialog.Content>
                         <Dialog.Header>
-                            <DialogTitle>Dialog Title</DialogTitle>
+                            <DialogTitle>{dialogTitle}</DialogTitle>
                         </Dialog.Header>
                         <Dialog.Body>
-                            COSIK
+                            {dialogBody}
                         </Dialog.Body>
                         <Dialog.Footer>
                             <Dialog.ActionTrigger asChild>
                                 <Button variant="outline">Cancel</Button>
                             </Dialog.ActionTrigger>
-                            <Button>Edit</Button>
+                            <Button
+                                colorPalette={'teal'}
+                                onClick={actionButtonAction}
+                            >
+                                {actionButtonText}
+                            </Button>
                         </Dialog.Footer>
                         <Dialog.CloseTrigger asChild>
-                            <CloseButton />
+                            <CloseButton  />
                         </Dialog.CloseTrigger>
                     </Dialog.Content>
                 </Dialog.Positioner>
@@ -53,4 +64,4 @@ const EditProfileDialogComponent = ({ open, setOpen }: Props) => {
     )
 }
 
-export default EditProfileDialogComponent;
+export default DialogComponent;

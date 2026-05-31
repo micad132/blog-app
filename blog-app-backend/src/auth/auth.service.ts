@@ -33,7 +33,12 @@ export class AuthService {
     // if (user?.password !== pass) {
     //   throw new UnauthorizedException();
     // }
-    const payload = { sub: user.id, username: user.username, role: user.role };
+    const payload: JwtPayload = {
+      sub: user.id,
+      username: user.username,
+      city: user.city,
+      role: user.role,
+    };
     const accessToken = await this.jwtService.signAsync(payload);
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
