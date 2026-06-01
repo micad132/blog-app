@@ -18,6 +18,7 @@ export const GET_COMMENTS = gql`
             user {
                 id
                 city
+                country
                 role
                 username
             }
@@ -35,6 +36,7 @@ export const GET_COMMENT = gql`
             user {
                 id
                 city
+                country
                 role
                 username
             }

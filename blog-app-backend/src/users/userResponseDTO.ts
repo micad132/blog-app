@@ -14,4 +14,7 @@ export class UserResponseDTO {
 
   @Field()
   city!: string;
+
+  @Field()
+  country!: string;
 }

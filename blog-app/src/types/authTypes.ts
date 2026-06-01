@@ -9,18 +9,21 @@ export type Register = {
     password: string,
     confirmPassword: string,
     city: string,
+    country: string,
 }
 
 export type RegisterRequest = {
     username: string,
     password: string,
     city: string,
+    country: string,
 }
 
 export type User = {
     sub: number;
     username: string;
     city: string,
+    country: string,
     role: UserRole;
 }
 
@@ -33,5 +36,6 @@ export const USER_DEFAULT_VALUES: User = {
     sub: 0,
     username: '',
     city: '',
+    country: '',
     role: UserRole.USER,
 }

@@ -27,6 +27,10 @@ export class UserEntity {
   @Column()
   city!: string;
 
+  @Field()
+  @Column()
+  country!: string;
+
   @Column()
   password!: string;
 

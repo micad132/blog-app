@@ -3,6 +3,7 @@ import type { Register } from "../types/authTypes.ts";
 import { useState } from "react";
 import AuthInput from "./components/authInput.component.tsx";
 import { FaLock, FaRegUser, FaCity } from "react-icons/fa";
+import { BiWorld } from "react-icons/bi";
 import { Button } from "@chakra-ui/react";
 import { Toaster, toaster } from "../components/ui/toaster.tsx";
 import { registerValidation } from "../utils/validators.tsx";
@@ -16,6 +17,7 @@ const RegisterContainer = () => {
         password: '',
         confirmPassword: '',
         city: '',
+        country: '',
     })
 
     const handleValueChange = (value: string, key: keyof Register)=> {
@@ -38,8 +40,9 @@ const RegisterContainer = () => {
             return;
         }
         try {
-            await registerRequest({ username: registerValues.username, password: registerValues.password, city: registerValues.city });
-            setRegisterValues({ username: '', city: '', password: '', confirmPassword: '' });
+            await registerRequest({ username: registerValues.username, password: registerValues.password,
+                city: registerValues.city, country: registerValues.country });
+            setRegisterValues({ username: '', city: '', password: '', confirmPassword: '', country: '' });
             toaster.create({
                 title: "Success!",
                 description: "You were successfully registered! Now you can log in",
@@ -90,6 +93,14 @@ const RegisterContainer = () => {
                 value={registerValues.city}
                 onChange={(value) => handleValueChange(value, 'city')}
                 label='City'
+                isPassword={false}
+            />
+            <AuthInput
+                icon={<BiWorld />}
+                placeholder={'Country'}
+                value={registerValues.country}
+                onChange={(value) => handleValueChange(value, 'country')}
+                label='Country'
                 isPassword={false}
             />
             <Button type={'submit'}>

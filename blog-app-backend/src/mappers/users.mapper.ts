@@ -11,6 +11,7 @@ export const UsersMapper = {
       username: dto.username,
       password: passwordHash,
       city: dto.city,
+      country: dto.country,
       role: UserRole.USER,
     };
   },
@@ -19,6 +20,7 @@ export const UsersMapper = {
       id: userEntity.id,
       city: userEntity.city,
       role: userEntity.role,
+      country: userEntity.country,
       username: userEntity.username,
     };
   },
