@@ -46,7 +46,6 @@ const LoginContainer = () => {
 
     const handleLogin = async (e: SubmitEvent) => {
         e.preventDefault();
-        console.log('login values', loginValues);
         try {
             await login({ username: loginValues.username, password: loginValues.password });
             toaster.create({

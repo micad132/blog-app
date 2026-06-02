@@ -3,6 +3,8 @@ import { useState } from "react";
 import DialogComponent from "../../components/dialog.component.tsx";
 import InputComponent from "../../components/input.component.tsx";
 import { useAuthStore } from "../../store/authStore.ts";
+import UserDataComponent from "./userData.component.tsx";
+import UserRoleComponent from "./userRole.component.tsx";
 
 
 const Wrapper = styled.div`
@@ -21,6 +23,19 @@ const DialogBodyWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+`
+
+const DetailsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    background: #16171d;
+    width: 70%;
+    margin: 20px auto;
+    border-radius: 5px;
+    padding: 10px 0;
 `
 
 
@@ -46,9 +61,9 @@ const UserDetailsComponent = () => {
                 isRequired={false}
             />
             <InputComponent
-                label={"Password"}
+                label={"Country"}
                 value={undefined}
-                placeholder={""}
+                placeholder={user.country}
                 onChange={() => {}}
                 isRequired={false}
             />
@@ -58,7 +73,23 @@ const UserDetailsComponent = () => {
     return (
         <Wrapper>
             <Header>User details:</Header>
-            jdjsjdjs
+            <DetailsWrapper>
+                <UserDataComponent
+                    title={'Username:'}
+                    data={user.username}
+                />
+                <UserDataComponent
+                    title={'City:'}
+                    data={user.city}
+                />
+                <UserDataComponent
+                    title={'Country:'}
+                    data={user.country}
+                />
+                <UserRoleComponent
+                    data={user.role}
+                />
+            </DetailsWrapper>
             <DialogComponent
                 open={open}
                 setOpen={setOpen}
