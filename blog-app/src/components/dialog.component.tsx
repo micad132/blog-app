@@ -14,10 +14,11 @@ interface Props {
     dialogTitle: string,
     dialogBody: ReactNode,
     actionButtonText: string,
+    dialogOpenButtonColor?: string,
 }
 
 const DialogComponent = ({ open, setOpen,
-                             actionButtonAction, dialogOpenButtonText, dialogTitle, dialogBody, actionButtonText }: Props) => {
+                             actionButtonAction, dialogOpenButtonText, dialogTitle, dialogBody, actionButtonText, dialogOpenButtonColor = 'white' }: Props) => {
 
     return (
         <Dialog.Root
@@ -27,7 +28,7 @@ const DialogComponent = ({ open, setOpen,
         >
             <Dialog.Trigger asChild>
                 <Button
-                    colorPalette="white"
+                    colorPalette={dialogOpenButtonColor}
                     variant="solid"
                 >
                     {dialogOpenButtonText}
@@ -48,7 +49,7 @@ const DialogComponent = ({ open, setOpen,
                                 <Button variant="outline">Cancel</Button>
                             </Dialog.ActionTrigger>
                             <Button
-                                colorPalette={'teal'}
+                                colorPalette="teal"
                                 onClick={actionButtonAction}
                             >
                                 {actionButtonText}

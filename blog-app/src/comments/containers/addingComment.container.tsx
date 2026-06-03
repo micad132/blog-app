@@ -44,9 +44,9 @@ const AddingCommentContainer = () => {
             <StyledTextarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
-                placeholder={'Add comment here...'}
-                resize={'none'}
-                colorPalette={'teal'}
+                placeholder="Add comment here..."
+                resize="none"
+                colorPalette="teal"
             />
             <Field.HelperText>Max 100 characters.</Field.HelperText>
             <Button

@@ -65,31 +65,31 @@ const RegisterContainer = () => {
         <AuthWrapper onSubmit={handleRegister}>
             <AuthInput
                 icon={<FaRegUser />}
-                placeholder={'Username'}
+                placeholder="Username"
                 value={registerValues.username}
                 onChange={(value) => handleValueChange(value, 'username')}
-                label={'Username'}
+                label="Username"
                 isPassword={false}
             />
             <AuthInput
                 icon={<FaLock />}
-                placeholder={'Password'}
+                placeholder="Password"
                 value={registerValues.password}
                 onChange={(value) => handleValueChange(value, 'password')}
-                label={'Password'}
+                label="Password"
                 isPassword={true}
             />
             <AuthInput
                 icon={<FaLock />}
-                placeholder={'Confirm password'}
+                placeholder="Confirm password"
                 value={registerValues.confirmPassword}
                 onChange={(value) => handleValueChange(value, 'confirmPassword')}
-                label={'Confirm password'}
+                label="Confirm password"
                 isPassword={true}
             />
             <AuthInput
                 icon={<FaCity />}
-                placeholder={'City'}
+                placeholder="City"
                 value={registerValues.city}
                 onChange={(value) => handleValueChange(value, 'city')}
                 label='City'
@@ -97,13 +97,13 @@ const RegisterContainer = () => {
             />
             <AuthInput
                 icon={<BiWorld />}
-                placeholder={'Country'}
+                placeholder="Country"
                 value={registerValues.country}
                 onChange={(value) => handleValueChange(value, 'country')}
                 label='Country'
                 isPassword={false}
             />
-            <Button type={'submit'}>
+            <Button type="submit">
                 Register
             </Button>
             <Toaster />

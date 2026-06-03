@@ -13,7 +13,7 @@ const App = () => {
 
     useEffect(() => {
         checkAuth();
-    }, [])
+    }, [checkAuth])
 
     if(isLoading) {
         return <LoadingSpinnerComponent />

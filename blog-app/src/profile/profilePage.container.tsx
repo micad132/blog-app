@@ -24,8 +24,8 @@ export const ProfilePageContainer = () => {
         <MainWrapper>
             <UserDetailsComponent />
             <Wrapper>
-                <SingleContentWrapperComponent title={'My comments'} />
-                <SingleContentWrapperComponent title={'My posts'} />
+                <SingleContentWrapperComponent title="My comments" />
+                <SingleContentWrapperComponent title="My posts" />
             </Wrapper>
         </MainWrapper>
     )

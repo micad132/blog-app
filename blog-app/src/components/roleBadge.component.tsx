@@ -14,7 +14,7 @@ const getProperRoleColor = (role: UserRole) => {
 const RoleBadgeComponent = ({ role }: Props) => {
         return (
             <Badge
-                variant={'solid'}
+                variant="solid"
                 colorPalette={getProperRoleColor(role)}
             >
                 {role}

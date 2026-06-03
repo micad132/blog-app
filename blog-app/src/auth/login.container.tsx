@@ -75,17 +75,17 @@ const LoginContainer = () => {
             <AuthInput
                 value={loginValues.username}
                 icon={<FaRegUser/>}
-                placeholder={'Username'}
+                placeholder="Username"
                 onChange={handleUsernameChange}
-                label={'Username'}
+                label="Username"
                 isPassword={false}
             />
             <AuthInput
                 value={loginValues.password}
                 icon={<FaLock/>}
-                placeholder={'Password'}
+                placeholder="Password"
                 onChange={handlePasswordChange}
-                label={'Password'}
+                label="Password"
                 isPassword={true}
             />
             <Button
