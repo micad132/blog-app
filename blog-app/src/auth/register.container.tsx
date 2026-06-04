@@ -9,9 +9,11 @@ import { Toaster, toaster } from "../components/ui/toaster.tsx";
 import { registerValidation } from "../utils/validators.tsx";
 import { registerRequest } from "./api/authRequests.ts";
 import { ErrorObj } from "../utils/errorObj.ts";
+import { useNavigate } from "react-router";
 
 const RegisterContainer = () => {
 
+    const navigate = useNavigate();
     const [registerValues, setRegisterValues] = useState<Register>({
         username: '',
         password: '',
@@ -49,6 +51,9 @@ const RegisterContainer = () => {
                 closable: true,
                 type: 'success',
             })
+            setTimeout(() => {
+                navigate('/login');
+            }, 1500)
         } catch (e) {
             if(e instanceof ErrorObj) {
                 toaster.create({

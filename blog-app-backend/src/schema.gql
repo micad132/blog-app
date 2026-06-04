@@ -48,4 +48,5 @@ type Query {
 type Mutation {
   createComment(text: String!): CommentEntity!
   removeComment(id: Int!): Boolean!
+  deleteMyAccount(id: Int!): Boolean!
 }

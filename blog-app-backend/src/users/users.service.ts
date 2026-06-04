@@ -29,4 +29,8 @@ export class UsersService {
     const user = this.userRepository.create(mappedDtoToEntity);
     return this.userRepository.save(user);
   }
+
+  async removeUserById(id: number): Promise<void> {
+    await this.userRepository.delete(id);
+  }
 }

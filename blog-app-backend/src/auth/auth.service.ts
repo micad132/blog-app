@@ -34,7 +34,7 @@ export class AuthService {
     //   throw new UnauthorizedException();
     // }
     const payload: JwtPayload = {
-      sub: user.id,
+      id: user.id,
       username: user.username,
       country: user.country,
       city: user.city,

@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { UserRole } from '../users/user.role.enum';
 
 export type JwtPayload = {
-  sub: number;
+  id: number;
   username: string;
   city: string;
   country: string;

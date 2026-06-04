@@ -6,6 +6,10 @@ import { useAuthStore } from "../../store/authStore.ts";
 import UserDataComponent from "./userData.component.tsx";
 import UserRoleComponent from "./userRole.component.tsx";
 import { PasswordInput } from "../../components/ui/password-input.tsx";
+import { useMutation } from "@apollo/client/react";
+import { REMOVE_USER } from "../../graphql/queries/user.queries.ts";
+import { toaster } from "../../components/ui/toaster.tsx";
+import { useNavigate } from "react-router";
 
 
 const Wrapper = styled.div`
@@ -48,7 +52,28 @@ const UserDetailsComponent = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [changePasswordDialogOpen, setChangePasswordDialogOpen] = useState<boolean>(false);
     const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] = useState<boolean>(false);
+    const [deleteUser ] = useMutation(REMOVE_USER);
     const { user } = useAuthStore()
+    const navigate = useNavigate();
+
+    const onDeleteHandler = async () => {
+        try {
+            await deleteUser({
+                variables: { id: user.id, },
+            });
+            toaster.create({
+                title: "Success",
+                description: `You successfully deleted your account! Now you will get navigated to login page`,
+                closable: true,
+                type: 'success',
+            })
+            setTimeout(() => {
+                navigate('/login')
+            }, 1500);
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
 
     const dialogBody = (
@@ -140,7 +165,7 @@ const UserDetailsComponent = () => {
                 open={deleteAccountDialogOpen}
                 setOpen={setDeleteAccountDialogOpen}
                 actionButtonText="Delete"
-                actionButtonAction={() => {}}
+                actionButtonAction={onDeleteHandler}
                 dialogOpenButtonText="Delete account"
                 dialogTitle="Delete account"
                 dialogBody={deleteAccountDialogBody}
