@@ -8,9 +8,9 @@ import { toaster } from "../../components/ui/toaster.tsx";
 import { CombinedGraphQLErrors } from "@apollo/client";
 
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $isProfilePage?: boolean; }>`
     background: #e5e4e7;
-    width: 700px;
+    width: ${props => props.$isProfilePage ? '300px' : '700px'};
     margin: 10px auto;
     color: #000;
     border-radius: 5px;
@@ -46,10 +46,12 @@ interface Props {
     username: string,
     createdAt: string,
     id: number,
-    isAdmin: boolean,
+    isDeletionPossible: boolean,
+    isProfilePage: boolean,
 }
 
-const SingleComment = ({ text, createdAt, username, id, isAdmin }: Props) => {
+const SingleComment = ({ text, createdAt, username, id, isDeletionPossible,
+                           isProfilePage }: Props) => {
 
     const [deleteComment ] = useMutation(REMOVE_COMMENT, { refetchQueries: ['GetComments'] });
 
@@ -78,13 +80,13 @@ const SingleComment = ({ text, createdAt, username, id, isAdmin }: Props) => {
     };
 
     return (
-        <Wrapper>
+        <Wrapper $isProfilePage={isProfilePage}>
             <DetailsWithIcon>
                 <CommentDetailsWrapper>
                     <Username>{username}</Username>
                     <span>{formatDate(createdAt)}</span>
                 </CommentDetailsWrapper>
-                {isAdmin && <IconWrapper>
+                {isDeletionPossible && <IconWrapper>
                     <Icon
                         size="md"
                         onClick={handleDelete}

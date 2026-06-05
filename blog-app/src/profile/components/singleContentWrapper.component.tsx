@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import type { ReactNode } from "react";
 
 
 const Wrapper = styled.div`
@@ -6,6 +7,7 @@ const Wrapper = styled.div`
     border-radius: 10px;
     width: 700px;
     height: 300px;
+    overflow: auto;
 `
 
 const Header = styled.h5`
@@ -16,14 +18,16 @@ const Header = styled.h5`
 
 interface Props {
     title: string,
+    children: ReactNode,
 }
 
 
-export const SingleContentWrapperComponent = ({ title }: Props) => {
+export const SingleContentWrapperComponent = ({ title, children }: Props) => {
 
     return (
         <Wrapper>
             <Header>{title}</Header>
+            {children}
         </Wrapper>
     )
 }

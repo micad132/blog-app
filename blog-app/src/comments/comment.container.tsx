@@ -47,7 +47,8 @@ const CommentContainer = () => {
                         text={com.text}
                         username={com.user.username}
                         createdAt={com.createdAt}
-                        isAdmin={isAdmin}
+                        isDeletionPossible={isAdmin}
+                        isProfilePage={false}
                     />
                     ))}
             </div>

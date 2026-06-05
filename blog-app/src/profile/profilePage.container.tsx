@@ -1,6 +1,7 @@
 import SingleContentWrapperComponent from "./components/singleContentWrapper.component.tsx";
 import styled from "styled-components";
 import UserDetailsComponent from "./components/userDetails.component.tsx";
+import CommentsContentComponent from "./components/commentsContent.component.tsx";
 
 
 const MainWrapper = styled.div`
@@ -18,14 +19,19 @@ const Wrapper = styled.div`
     gap: 20px;
 `
 
+
 export const ProfilePageContainer = () => {
 
     return (
         <MainWrapper>
             <UserDetailsComponent />
             <Wrapper>
-                <SingleContentWrapperComponent title="My comments" />
-                <SingleContentWrapperComponent title="My posts" />
+                <SingleContentWrapperComponent title="My comments">
+                    <CommentsContentComponent />
+                </SingleContentWrapperComponent>
+                <SingleContentWrapperComponent title="My posts">
+                    <CommentsContentComponent />
+                </SingleContentWrapperComponent>
             </Wrapper>
         </MainWrapper>
     )
