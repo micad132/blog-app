@@ -1,10 +1,15 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserEntity } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Nullable } from '../types/types';
 import type { RegisterModel } from '../auth/registerDto.model';
 import { UsersMapper } from '../mappers/users.mapper';
+import { UpdateUserDTO } from './updateUserDTO';
 
 @Injectable()
 export class UsersService {
@@ -32,5 +37,19 @@ export class UsersService {
 
   async removeUserById(id: number): Promise<void> {
     await this.userRepository.delete(id);
+  }
+
+  async update(updateUserInput: UpdateUserDTO): Promise<UserEntity> {
+    const { id, ...rest } = updateUserInput;
+
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    // nadpisujemy tylko pola, które faktycznie przyszły
+    Object.assign(user, rest);
+
+    return this.userRepository.save(user);
   }
 }

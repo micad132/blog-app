@@ -4,6 +4,7 @@ import { UsersService } from './users.service';
 import { Nullable } from '../types/types';
 import { Response } from '@nestjs/common';
 import type { Response as ExpressResponse } from 'express';
+import { UpdateUserDTO } from './updateUserDTO';
 
 @Resolver(() => UserEntity)
 export class UsersResolver {
@@ -29,5 +30,12 @@ export class UsersResolver {
     await this.usersService.removeUserById(id);
     context.res.clearCookie('accessToken');
     return true;
+  }
+
+  @Mutation(() => UserEntity)
+  updateUser(
+    @Args('updateUserDTO') updateUserDTO: UpdateUserDTO,
+  ): Promise<UserEntity> {
+    return this.usersService.update(updateUserDTO);
   }
 }

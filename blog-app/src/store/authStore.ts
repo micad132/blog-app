@@ -13,6 +13,7 @@ export type AuthStore = {
     checkAuth: () => void,
     login: (loginDto: Login) => Promise<void>,
     logout: () => void,
+    setUserData: (data: Partial<User>) => void,
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -33,7 +34,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     },
     login: async (loginDto: Login) => {
         try {
-            const res = await axios.post(`http://localhost:3000/auth/login`, loginDto, { withCredentials: true })
+            const res = await axios.post(`${API_PATH}/auth/login`, loginDto, { withCredentials: true })
             set({ user: res.data, error: '', isLogged: true })
         } catch (e) {
             console.log('catch', e);
@@ -59,5 +60,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
             }
             throw e;
         }
+    },
+    setUserData: (data: Partial<User>) => {
+        set((state) => ({ user: { ...state.user, ...data } }))
     }
 }));

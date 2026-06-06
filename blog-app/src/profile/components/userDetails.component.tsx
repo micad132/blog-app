@@ -7,9 +7,10 @@ import UserDataComponent from "./userData.component.tsx";
 import UserRoleComponent from "./userRole.component.tsx";
 import { PasswordInput } from "../../components/ui/password-input.tsx";
 import { useMutation } from "@apollo/client/react";
-import { REMOVE_USER } from "../../graphql/queries/user.queries.ts";
+import { REMOVE_USER, UPDATE_USER } from "../../graphql/queries/user.queries.ts";
 import { toaster } from "../../components/ui/toaster.tsx";
 import { useNavigate } from "react-router";
+import type { UserUpdateDTO, UserUpdateValues } from "../../types/userTypes.ts";
 
 
 const Wrapper = styled.div`
@@ -52,8 +53,20 @@ const UserDetailsComponent = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [changePasswordDialogOpen, setChangePasswordDialogOpen] = useState<boolean>(false);
     const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] = useState<boolean>(false);
+
+
+    const { user, setUserData } = useAuthStore()
+
+    const [userUpdateValues, setUserUpdateValues] = useState<UserUpdateValues>({
+        username: user.username,
+        city: user.city,
+        country: user.country,
+    });
+
     const [deleteUser ] = useMutation(REMOVE_USER);
-    const { user } = useAuthStore()
+    const [updateUser] = useMutation(UPDATE_USER);
+
+
     const navigate = useNavigate();
 
     const onDeleteHandler = async () => {
@@ -75,28 +88,57 @@ const UserDetailsComponent = () => {
         }
     }
 
+    const updateUserHandler = async () => {
+        const dataToUpdate: UserUpdateDTO = {
+            id: user.id,
+            ...userUpdateValues,
+        }
+        try {
+            const result = await updateUser({ variables: { input: dataToUpdate } });
+            const updatedUser = result.data?.updateUser;
+            if(updatedUser) {
+                setUserData(updatedUser);
+            }
+            toaster.create({
+                title: "Success",
+                description: `You successfully updated your account data`,
+                closable: true,
+                type: 'success',
+            })
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
-    const dialogBody = (
+    const updateUserDataHandler = (key: keyof UserUpdateValues, value: string) => {
+        setUserUpdateValues((prevState) => ({
+            ...prevState,
+            [key]: value,
+        }))
+    }
+
+
+    const updateUserDialogBody = (
         <DialogBodyWrapper>
-            <InputComponent
+            <InputComponent<string>
                 label="Username"
-                value={undefined}
+                value={userUpdateValues.username}
                 placeholder={user.username}
-                onChange={() => {}}
+                onChange={(value) => updateUserDataHandler('username', value)}
                 isRequired={false}
             />
             <InputComponent
                 label="City"
-                value={undefined}
+                value={userUpdateValues.city}
                 placeholder={user.city}
-                onChange={() => {}}
+                onChange={(value) => updateUserDataHandler('city', value)}
                 isRequired={false}
             />
             <InputComponent
                 label="Country"
-                value={undefined}
+                value={userUpdateValues.country}
                 placeholder={user.country}
-                onChange={() => {}}
+                onChange={(value) => updateUserDataHandler('country', value)}
                 isRequired={false}
             />
         </DialogBodyWrapper>
@@ -156,10 +198,10 @@ const UserDetailsComponent = () => {
                 open={open}
                 setOpen={setOpen}
                 actionButtonText="Edit"
-                actionButtonAction={() => {}}
+                actionButtonAction={updateUserHandler}
                 dialogOpenButtonText="Edit profile"
                 dialogTitle="Edit profile"
-                dialogBody={dialogBody}
+                dialogBody={updateUserDialogBody}
             />
             <DialogComponent
                 open={deleteAccountDialogOpen}

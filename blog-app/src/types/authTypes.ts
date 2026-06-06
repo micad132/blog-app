@@ -21,7 +21,6 @@ export type RegisterRequest = {
 
 export type User = {
     id: number,
-    sub: number;
     username: string;
     city: string,
     country: string,
@@ -35,7 +34,6 @@ export enum UserRole {
 
 export const USER_DEFAULT_VALUES: User = {
     id: 0,
-    sub: 0,
     username: '',
     city: '',
     country: '',

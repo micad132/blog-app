@@ -49,4 +49,12 @@ type Mutation {
   createComment(text: String!): CommentEntity!
   removeComment(id: Int!): Boolean!
   deleteMyAccount(id: Int!): Boolean!
+  updateUser(updateUserDTO: UpdateUserDTO!): UserEntity!
+}
+
+input UpdateUserDTO {
+  id: ID!
+  username: String!
+  city: String!
+  country: String!
 }

@@ -1,81 +1,81 @@
 import styled from "styled-components";
 import { formatDate } from "../../utils/formatters.ts";
 import { FaTrash } from "react-icons/fa";
-import { Icon } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
 import { useMutation } from "@apollo/client/react";
+import { CombinedGraphQLErrors } from "@apollo/client";
 import { REMOVE_COMMENT } from "../../graphql/queries/comments.queries.ts";
 import { toaster } from "../../components/ui/toaster.tsx";
-import { CombinedGraphQLErrors } from "@apollo/client";
 
-
-const Wrapper = styled.div<{ $isProfilePage?: boolean; }>`
+const Wrapper = styled.div<{ $isProfilePage: boolean }>`
     background: #e5e4e7;
-    width: ${props => props.$isProfilePage ? '300px' : '700px'};
+    width: 100%;
+    max-width: ${props => (props.$isProfilePage ? "300px" : "700px")};
     margin: 10px auto;
     color: #000;
     border-radius: 5px;
     padding: 10px 0;
-`
-
+`;
 
 const DetailsWithIcon = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-right: 20px;
-`
+`;
 
 const CommentDetailsWrapper = styled.div`
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     padding: 0 0 0 15px;
-`
-
-const IconWrapper = styled.div`
-    cursor: pointer;
-`
+`;
 
 const Username = styled.span`
     font-weight: bold;
-`
+`;
 
+const Text = styled.p`
+    padding: 8px 15px 0;
+    margin: 0;
+    word-break: break-word;
+`;
 
 interface Props {
-    text: string,
-    username: string,
-    createdAt: string,
-    id: number,
-    isDeletionPossible: boolean,
-    isProfilePage: boolean,
+    text: string;
+    username: string;
+    createdAt: string;
+    id: number;
+    isDeletionPossible: boolean;
+    isProfilePage?: boolean;
 }
 
-const SingleComment = ({ text, createdAt, username, id, isDeletionPossible,
-                           isProfilePage }: Props) => {
-
-    const [deleteComment ] = useMutation(REMOVE_COMMENT, { refetchQueries: ['GetComments'] });
-
+const SingleComment = ({
+                           text,
+                           createdAt,
+                           username,
+                           id,
+                           isDeletionPossible,
+                           isProfilePage = false,
+                       }: Props) => {
+    const [deleteComment, { loading }] = useMutation(REMOVE_COMMENT, {
+        refetchQueries: ["GetComments"],
+    });
 
     const handleDelete = async () => {
         try {
-            await deleteComment({
-                variables: { id },
-            });
+            await deleteComment({ variables: { id } });
             toaster.create({
                 title: "Success",
                 description: `You successfully removed comment with id: ${id}`,
                 closable: true,
-                type: 'success',
-            })
+                type: "success",
+            });
         } catch (e) {
-            if (CombinedGraphQLErrors.is(e)) {
-                toaster.create({
-                    title: 'Error',
-                    description: e.errors[0].message,
-                    type: 'error',
-                });
-            }
-
+            const description = CombinedGraphQLErrors.is(e)
+                ? e.errors[0]?.message ?? "Unknown error"
+                : "Something went wrong while removing the comment";
+            toaster.create({ title: "Error", description, type: "error" });
         }
     };
 
@@ -86,18 +86,21 @@ const SingleComment = ({ text, createdAt, username, id, isDeletionPossible,
                     <Username>{username}</Username>
                     <span>{formatDate(createdAt)}</span>
                 </CommentDetailsWrapper>
-                {isDeletionPossible && <IconWrapper>
-                    <Icon
-                        size="md"
+                {isDeletionPossible && (
+                    <IconButton
+                        aria-label={`Delete comment by ${username}`}
+                        size="sm"
+                        variant="ghost"
                         onClick={handleDelete}
+                        loading={loading}
                     >
                         <FaTrash />
-                    </Icon>
-                </IconWrapper>}
+                    </IconButton>
+                )}
             </DetailsWithIcon>
-            {text}
+            <Text>{text}</Text>
         </Wrapper>
-    )
-}
+    );
+};
 
 export default SingleComment;
