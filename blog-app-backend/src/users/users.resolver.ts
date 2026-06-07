@@ -1,10 +1,13 @@
-import { Args, Context, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserEntity } from './user.entity';
 import { UsersService } from './users.service';
 import { Nullable } from '../types/types';
 import { Response } from '@nestjs/common';
 import type { Response as ExpressResponse } from 'express';
 import { UpdateUserDTO } from './updateUserDTO';
+import { CurrentUser } from '../decorators/currentUser.decorator';
+import type { JwtPayload } from '../auth/auth.types';
+import { ChangePasswordDTO } from './dto/changePasswordDTO';
 
 @Resolver(() => UserEntity)
 export class UsersResolver {
@@ -24,10 +27,10 @@ export class UsersResolver {
 
   @Mutation(() => Boolean)
   async deleteMyAccount(
-    @Args('id', { type: () => Int }) id: number,
+    @CurrentUser() user: JwtPayload,
     @Context() context: { req: Request; res: ExpressResponse },
   ): Promise<boolean> {
-    await this.usersService.removeUserById(id);
+    await this.usersService.removeUserById(user.id);
     context.res.clearCookie('accessToken');
     return true;
   }
@@ -37,5 +40,13 @@ export class UsersResolver {
     @Args('updateUserDTO') updateUserDTO: UpdateUserDTO,
   ): Promise<UserEntity> {
     return this.usersService.update(updateUserDTO);
+  }
+
+  @Mutation(() => Boolean)
+  async changeMyPassword(
+    @CurrentUser() user: JwtPayload,
+    @Args('input') input: ChangePasswordDTO,
+  ): Promise<boolean> {
+    return await this.usersService.changeMyPassword(user.id, input);
   }
 }
