@@ -28,3 +28,8 @@ export type UserUpdateResponseDTO = {
 export type UpdateUserVars = {
     input: UserUpdateDTO;
 };
+
+export type UpdatePasswordDTO = {
+    oldPassword: string,
+    newPassword: string,
+};

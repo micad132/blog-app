@@ -7,10 +7,10 @@ import UserDataComponent from "./userData.component.tsx";
 import UserRoleComponent from "./userRole.component.tsx";
 import { PasswordInput } from "../../components/ui/password-input.tsx";
 import { useMutation } from "@apollo/client/react";
-import { REMOVE_USER, UPDATE_USER } from "../../graphql/queries/user.queries.ts";
+import { REMOVE_USER, UPDATE_PASSWORD, UPDATE_USER } from "../../graphql/queries/user.queries.ts";
 import { toaster } from "../../components/ui/toaster.tsx";
 import { useNavigate } from "react-router";
-import type { UserUpdateDTO, UserUpdateValues } from "../../types/userTypes.ts";
+import type { UpdatePasswordDTO, UserUpdateDTO, UserUpdateValues } from "../../types/userTypes.ts";
 
 
 const Wrapper = styled.div`
@@ -63,8 +63,14 @@ const UserDetailsComponent = () => {
         country: user.country,
     });
 
+    const [updatePasswordValues, setUpdatePasswordValues] = useState<UpdatePasswordDTO>({
+        newPassword: '',
+        oldPassword: '',
+    })
+
     const [deleteUser ] = useMutation(REMOVE_USER);
     const [updateUser] = useMutation(UPDATE_USER);
+    const [changeMyPassword] = useMutation(UPDATE_PASSWORD);
 
 
     const navigate = useNavigate();
@@ -110,6 +116,20 @@ const UserDetailsComponent = () => {
         }
     }
 
+    const updateUserPasswordActionHandler = async () => {
+        try {
+            await changeMyPassword({ variables: { input: updatePasswordValues } });
+            toaster.create({
+                title: "Success",
+                description: `You successfully changed your account password`,
+                closable: true,
+                type: 'success',
+            })
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     const updateUserDataHandler = (key: keyof UserUpdateValues, value: string) => {
         setUserUpdateValues((prevState) => ({
             ...prevState,
@@ -117,6 +137,12 @@ const UserDetailsComponent = () => {
         }))
     }
 
+    const updateUserPasswordHandler = (key: keyof UpdatePasswordDTO, value: string) => {
+        setUpdatePasswordValues((prevState) => ({
+            ...prevState,
+            [key]: value,
+        }))
+    }
 
     const updateUserDialogBody = (
         <DialogBodyWrapper>
@@ -127,14 +153,14 @@ const UserDetailsComponent = () => {
                 onChange={(value) => updateUserDataHandler('username', value)}
                 isRequired={false}
             />
-            <InputComponent
+            <InputComponent<string>
                 label="City"
                 value={userUpdateValues.city}
                 placeholder={user.city}
                 onChange={(value) => updateUserDataHandler('city', value)}
                 isRequired={false}
             />
-            <InputComponent
+            <InputComponent<string>
                 label="Country"
                 value={userUpdateValues.country}
                 placeholder={user.country}
@@ -147,14 +173,14 @@ const UserDetailsComponent = () => {
     const changePasswordDialogBody = (
         <DialogBodyWrapper>
             <PasswordInput
-                value={undefined}
-                placeholder="Type new password here..."
-                onChange={() => {}}
+                value={updatePasswordValues.oldPassword}
+                placeholder="Type old password here"
+                onChange={(event) => updateUserPasswordHandler('oldPassword', event.target.value)}
             />
             <PasswordInput
-                value={undefined}
-                placeholder="Confirm new password"
-                onChange={() => {}}
+                value={updatePasswordValues.newPassword}
+                placeholder="Type new password here"
+                onChange={(event) => updateUserPasswordHandler('newPassword', event.target.value)}
             />
         </DialogBodyWrapper>
     )
@@ -189,7 +215,7 @@ const UserDetailsComponent = () => {
                 open={changePasswordDialogOpen}
                 setOpen={setChangePasswordDialogOpen}
                 actionButtonText="Change"
-                actionButtonAction={() => {}}
+                actionButtonAction={updateUserPasswordActionHandler}
                 dialogOpenButtonText="Change password"
                 dialogTitle="Change password"
                 dialogBody={changePasswordDialogBody}

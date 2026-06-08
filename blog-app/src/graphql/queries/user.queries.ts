@@ -18,3 +18,9 @@ export const UPDATE_USER: TypedDocumentNode<UserUpdateResponseDTO, UpdateUserVar
     }
 `;
 
+export const UPDATE_PASSWORD = gql`
+    mutation ChangeMyPassword($input: ChangePasswordDTO!)  {
+        changeMyPassword(input: $input)
+    }
+`
+

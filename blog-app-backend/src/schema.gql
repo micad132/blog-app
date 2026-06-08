@@ -48,8 +48,9 @@ type Query {
 type Mutation {
   createComment(text: String!): CommentEntity!
   removeComment(id: Int!): Boolean!
-  deleteMyAccount(id: Int!): Boolean!
+  deleteMyAccount: Boolean!
   updateUser(updateUserDTO: UpdateUserDTO!): UserEntity!
+  changeMyPassword(input: ChangePasswordDTO!): Boolean!
 }
 
 input UpdateUserDTO {
@@ -57,4 +58,9 @@ input UpdateUserDTO {
   username: String!
   city: String!
   country: String!
+}
+
+input ChangePasswordDTO {
+  oldPassword: String!
+  newPassword: String!
 }
