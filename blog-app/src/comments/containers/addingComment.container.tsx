@@ -1,9 +1,10 @@
-import { Button, Field, Textarea } from "@chakra-ui/react"
+import { Field, Textarea } from "@chakra-ui/react"
 import { useState } from "react";
 import styled from "styled-components";
 import { useMutation } from "@apollo/client/react";
 import { CREATE_COMMENT } from "../../graphql/queries/comments.queries.ts";
 import LoadingSpinnerComponent from "../../components/loadingSpinner.component.tsx";
+import ButtonComponent from "../../components/button.component.tsx";
 
 
 const Wrapper = styled.form`
@@ -49,13 +50,12 @@ const AddingCommentContainer = () => {
                 colorPalette="teal"
             />
             <Field.HelperText>Max 100 characters.</Field.HelperText>
-            <Button
-                colorPalette="teal"
-                variant="solid"
-                type='submit'
-            >
-                Add
-            </Button>
+                <ButtonComponent
+                    isTooltip={commentText.length === 0}
+                    disabled={commentText.length === 0}
+                    tooltipContent="You cannot add empty comment!"
+                    buttonText="Add"
+                />
             </Field.Root>
             {error && <p>Error: {error.message}</p>}
         </Wrapper>
