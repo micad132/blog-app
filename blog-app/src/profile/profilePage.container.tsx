@@ -26,10 +26,10 @@ export const ProfilePageContainer = () => {
         <MainWrapper>
             <UserDetailsComponent />
             <Wrapper>
-                <SingleContentWrapperComponent title="My comments">
+                <SingleContentWrapperComponent>
                     <CommentsContentComponent />
                 </SingleContentWrapperComponent>
-                <SingleContentWrapperComponent title="My posts">
+                <SingleContentWrapperComponent>
                     <CommentsContentComponent />
                 </SingleContentWrapperComponent>
             </Wrapper>

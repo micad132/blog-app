@@ -11,6 +11,12 @@ const CommentsContainerWrapper = styled.div`
     justify-content: flex-start;
 `
 
+const Header = styled.h5`
+    font-weight: bold;
+    color: #fff;
+    padding-top: 10px;
+`
+
 const CommentsContentComponent = () => {
     const { data, loading } = useQuery<CommentFetchResponse>(GET_COMMENTS);
 
@@ -19,19 +25,23 @@ const CommentsContentComponent = () => {
     }
 
     return (
-        <CommentsContainerWrapper>
-            {data?.comments.map((comment) => (
-                <SingleComment
-                    key={comment.id}
-                    id={comment.id}
-                    isDeletionPossible
-                    text={comment.text}
-                    createdAt={comment.createdAt}
-                    username={comment.user.username}
-                    isProfilePage={true}
-                />
-            ))}
-        </CommentsContainerWrapper>
+        <div>
+            <Header>My comments: {data?.comments.length}</Header>
+            <CommentsContainerWrapper>
+                {data?.comments.map((comment) => (
+                    <SingleComment
+                        key={comment.id}
+                        id={comment.id}
+                        isDeletionPossible
+                        text={comment.text}
+                        createdAt={comment.createdAt}
+                        username={comment.user.username}
+                        isProfilePage={true}
+                    />
+                ))}
+            </CommentsContainerWrapper>
+        </div>
+
     )
 }
 

@@ -51,6 +51,7 @@ const DialogComponent = ({ open, setOpen,
                             <Button
                                 colorPalette="teal"
                                 onClick={actionButtonAction}
+                                type="submit"
                             >
                                 {actionButtonText}
                             </Button>

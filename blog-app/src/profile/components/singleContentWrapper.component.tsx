@@ -10,23 +10,17 @@ const Wrapper = styled.div`
     overflow: auto;
 `
 
-const Header = styled.h5`
-    font-weight: bold;
-    color: #fff;
-    padding-top: 10px;
-`
+
 
 interface Props {
-    title: string,
     children: ReactNode,
 }
 
 
-export const SingleContentWrapperComponent = ({ title, children }: Props) => {
+export const SingleContentWrapperComponent = ({ children }: Props) => {
 
     return (
         <Wrapper>
-            <Header>{title}</Header>
             {children}
         </Wrapper>
     )
