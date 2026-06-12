@@ -24,3 +24,15 @@ export const UPDATE_PASSWORD = gql`
     }
 `
 
+export const GET_ALL_USERS = gql`
+    query GetAllUsers {
+        users {
+            id,
+            username,
+            role,
+            country,
+            city,
+        }
+    }
+`
+

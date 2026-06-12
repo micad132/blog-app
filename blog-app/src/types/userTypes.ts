@@ -8,6 +8,10 @@ export type UserResponseDTO = {
     username: string,
 }
 
+export type UsersFetchResponse = {
+    users: UserResponseDTO[],
+}
+
 export type UserUpdateDTO = {
     id: number,
     username: string,

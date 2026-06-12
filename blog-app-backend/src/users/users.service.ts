@@ -14,6 +14,7 @@ import { ChangePasswordDTO } from './dto/changePasswordDTO';
 import * as bcrypt from 'bcrypt';
 import { PasswordNotTheSameException } from '../exceptions/passwordNotTheSameException';
 import { NewPasswordTheSameAsOldException } from '../exceptions/newPasswordTheSameAsOldException';
+import { UserResponseDTO } from './userResponseDTO';
 
 @Injectable()
 export class UsersService {
@@ -23,6 +24,11 @@ export class UsersService {
   ) {}
   async findOne(username: string): Promise<Nullable<UserEntity>> {
     return this.userRepository.findOne({ where: { username } });
+  }
+
+  async findAll(): Promise<UserResponseDTO[]> {
+    const allUsers = await this.userRepository.find();
+    return allUsers.map((user) => UsersMapper.mapEntityToDTO(user));
   }
 
   async signUp(registerDto: RegisterModel): Promise<UserEntity> {

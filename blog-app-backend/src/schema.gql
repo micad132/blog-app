@@ -42,7 +42,7 @@ type Query {
   comments: [CommentResponseDTO!]!
   comment(id: Int!): CommentResponseDTO!
   getUser(username: String!): UserEntity!
-  hello: String!
+  users: [UserResponseDTO!]!
 }
 
 type Mutation {

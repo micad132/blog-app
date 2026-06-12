@@ -66,6 +66,7 @@ const NavContainer = () => {
             >Home</StyledNavLink>
             <StyledNavLink to="/comments">Comments</StyledNavLink>
             <StyledNavLink to="/posts">Posts</StyledNavLink>
+            <StyledNavLink to="/users">Users</StyledNavLink>
         </NavWrapper>
     )
 }

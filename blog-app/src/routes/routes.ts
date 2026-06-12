@@ -8,6 +8,7 @@ import ProtectedRouteComponent from "./protectedRoute.component.tsx";
 import HomePageContainer from "../home/homePage.container.tsx";
 import PageNotFoundComponent from "../components/pageNotFound.component.tsx";
 import ProfilePageContainer from "../profile/profilePage.container.tsx";
+import UsersPageContainer from "../users/usersPage.container.tsx";
 
 export const routes = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ export const routes = createBrowserRouter([
                     {
                         path: "/posts",
                         Component: PostsContainer,
+                    },
+                    {
+                        path: "/users",
+                        Component: UsersPageContainer,
                     },
                     {
                         path: '/me',

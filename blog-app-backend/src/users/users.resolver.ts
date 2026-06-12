@@ -8,6 +8,7 @@ import { UpdateUserDTO } from './updateUserDTO';
 import { CurrentUser } from '../decorators/currentUser.decorator';
 import type { JwtPayload } from '../auth/auth.types';
 import { ChangePasswordDTO } from './dto/changePasswordDTO';
+import { UserResponseDTO } from './userResponseDTO';
 
 @Resolver(() => UserEntity)
 export class UsersResolver {
@@ -20,9 +21,9 @@ export class UsersResolver {
     return this.usersService.findOne(username);
   }
 
-  @Query(() => String)
-  hello(): string {
-    return 'cosik';
+  @Query(() => [UserResponseDTO], { name: 'users' })
+  async getAllUsers(): Promise<UserResponseDTO[]> {
+    return await this.usersService.findAll();
   }
 
   @Mutation(() => Boolean)
