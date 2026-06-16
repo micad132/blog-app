@@ -2,6 +2,11 @@ import { Button, Table } from "@chakra-ui/react"
 import type { UserResponseDTO } from "../../types/userTypes.ts";
 import styled from "styled-components";
 import RoleBadgeComponent from "../../components/roleBadge.component.tsx";
+import { useAuthStore } from "../../store/authStore.ts";
+import { UserRole } from "../../types/authTypes.ts";
+import { useMutation } from "@apollo/client/react";
+import { REMOVE_USER } from "../../graphql/queries/user.queries.ts";
+import { REMOVE_COMMENT } from "../../graphql/queries/comments.queries.ts";
 
 
 const TableWrapper = styled.div`
@@ -22,6 +27,23 @@ interface Props {
 
 const UsersTableComponent = ({ users }: Props) => {
 
+
+    const { user } = useAuthStore();
+    const isAdmin = user.role === UserRole.ADMIN;
+
+    const [deleteUserById, { loading }] = useMutation(REMOVE_USER, {
+        refetchQueries: ["GetAllUsers"]
+    });
+
+    const onDeleteUserHandler = async (userId: number) => {
+        try {
+            console.log('user id', userId);
+            await deleteUserById({ variables: { userId  } });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
         <TableWrapper>
         <Table.Root
@@ -35,7 +57,7 @@ const UsersTableComponent = ({ users }: Props) => {
                     <Table.ColumnHeader>City:</Table.ColumnHeader>
                     <Table.ColumnHeader>Country:</Table.ColumnHeader>
                     <Table.ColumnHeader>Role:</Table.ColumnHeader>
-                    <Table.ColumnHeader>Action:</Table.ColumnHeader>
+                    {isAdmin && <Table.ColumnHeader>Action:</Table.ColumnHeader>}
                 </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -46,16 +68,16 @@ const UsersTableComponent = ({ users }: Props) => {
                         <TableCell>{user.city}</TableCell>
                         <TableCell>{user.country}</TableCell>
                         <TableCell><RoleBadgeComponent role={user.role} /></TableCell>
-                        <TableCell>
-
+                        {isAdmin && <TableCell>
                             <Button
                                 variant="solid"
                                 colorPalette="red"
                                 size="xs"
+                                onClick={() => onDeleteUserHandler(user.id)}
                             >
                                 Delete
                             </Button>
-                        </TableCell>
+                        </TableCell>}
                     </TableRow>
                 ))}
             </Table.Body>

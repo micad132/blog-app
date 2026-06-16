@@ -63,5 +63,5 @@ export const useAuthStore = create<AuthStore>((set) => ({
     },
     setUserData: (data: Partial<User>) => {
         set((state) => ({ user: { ...state.user, ...data } }))
-    }
+    },
 }));

@@ -1,4 +1,4 @@
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserEntity } from './user.entity';
 import { UsersService } from './users.service';
 import { Nullable } from '../types/types';
@@ -49,5 +49,12 @@ export class UsersResolver {
     @Args('input') input: ChangePasswordDTO,
   ): Promise<boolean> {
     return await this.usersService.changeMyPassword(user.id, input);
+  }
+
+  @Mutation(() => Boolean)
+  async deleteUserById(
+    @Args('userId', { type: () => Int }) userId: number,
+  ): Promise<boolean> {
+    return await this.usersService.removeUserById(userId);
   }
 }

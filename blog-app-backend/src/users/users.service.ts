@@ -45,8 +45,9 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  async removeUserById(id: number): Promise<void> {
+  async removeUserById(id: number): Promise<boolean> {
     await this.userRepository.delete(id);
+    return true;
   }
 
   async update(updateUserInput: UpdateUserDTO): Promise<UserEntity> {

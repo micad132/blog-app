@@ -3,7 +3,7 @@ import type { UpdateUserVars, UserUpdateResponseDTO } from "../../types/userType
 
 export const REMOVE_USER = gql`
   mutation RemoveUser($id: Int!) {
-    deleteMyAccount(id: $id)
+    deleteUserById(userId: $id)
   }
 `;
 

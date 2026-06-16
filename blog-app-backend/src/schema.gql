@@ -51,6 +51,7 @@ type Mutation {
   deleteMyAccount: Boolean!
   updateUser(updateUserDTO: UpdateUserDTO!): UserEntity!
   changeMyPassword(input: ChangePasswordDTO!): Boolean!
+  deleteUserById(userId: Int!): Boolean!
 }
 
 input UpdateUserDTO {
