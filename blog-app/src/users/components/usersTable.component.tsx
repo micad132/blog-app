@@ -6,7 +6,7 @@ import { useAuthStore } from "../../store/authStore.ts";
 import { UserRole } from "../../types/authTypes.ts";
 import { useMutation } from "@apollo/client/react";
 import { REMOVE_USER } from "../../graphql/queries/user.queries.ts";
-import { REMOVE_COMMENT } from "../../graphql/queries/comments.queries.ts";
+import { toaster } from "../../components/ui/toaster.tsx";
 
 
 const TableWrapper = styled.div`
@@ -39,6 +39,12 @@ const UsersTableComponent = ({ users }: Props) => {
         try {
             console.log('user id', userId);
             await deleteUserById({ variables: { userId  } });
+            toaster.create({
+                title: "Success",
+                description: `You successfully deleted user with id: ${userId}`,
+                closable: true,
+                type: 'success',
+            })
         } catch (e) {
             console.log(e);
         }

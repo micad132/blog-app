@@ -2,8 +2,8 @@ import { gql, type TypedDocumentNode } from "@apollo/client";
 import type { UpdateUserVars, UserUpdateResponseDTO } from "../../types/userTypes.ts";
 
 export const REMOVE_USER = gql`
-  mutation RemoveUser($id: Int!) {
-    deleteUserById(userId: $id)
+  mutation RemoveUser($userId: Int!) {
+    deleteUserById(userId: $userId)
   }
 `;
 
